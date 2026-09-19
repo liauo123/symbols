@@ -529,9 +529,10 @@
         'ㄞ':'哀', 'ㄟ':'欸', 'ㄠ':'凹', 'ㄡ':'歐',
         'ㄢ':'安', 'ㄣ':'恩', 'ㄤ':'昂', 'ㄥ':'鞥', 'ㄦ':'兒'
       };
-      // 37 個注音單音人聲來源：jmh.why3s.tw/sounds/
-      // 保留線上播放，不複製來源音檔；無法連線時改用上方教材式語音對照。
-      const HUMAN_AUDIO_BASE = 'https://jmh.why3s.tw/sounds/';
+      // 37 個注音女聲來源：教育部《國字標準字體筆順學習網》。
+      // 官方音檔依注音 Unicode 順序編為 F1.WAV～F37.WAV；
+      // 保留線上播放，不複製來源音檔，無法連線時改用上方教材式語音對照。
+      const FEMALE_AUDIO_BASE = 'https://stroke-order.learningweb.moe.edu.tw/sound/F/';
       const symbolVoiceAudio = new Audio();
       symbolVoiceAudio.preload = 'auto';
       symbolVoiceAudio.volume = 1;
@@ -655,8 +656,9 @@
 
       function speakSymbol(symbol) {
         const request = ++symbolVoiceRequest;
+        const voiceNumber = symbol.codePointAt(0) - 0x3104;
         symbolVoiceAudio.pause();
-        symbolVoiceAudio.src = `${HUMAN_AUDIO_BASE}${encodeURIComponent(symbol)}.mp3`;
+        symbolVoiceAudio.src = `${FEMALE_AUDIO_BASE}F${voiceNumber}.WAV`;
         symbolVoiceAudio.load();
         speak('請找出。', true, () => {
           if (request !== symbolVoiceRequest) return;
