@@ -319,6 +319,8 @@
     .mode-btn:nth-child(2) { background: linear-gradient(145deg, #9475ed, #6549c7); }
     .mode-btn:nth-child(3) { background: linear-gradient(145deg, #50bced, #257dc3); }
     .mode-btn:nth-child(4) { background: linear-gradient(145deg, #ff8b69, #e65666); }
+    .mode-btn:nth-child(5) { background: linear-gradient(145deg, #ffb849, #ed7e28); }
+    .mode-btn:nth-child(6) { background: linear-gradient(145deg, #f16fb0, #bd4bcc); }
     .mode-icon { display: block; margin-bottom: 4px; font-size: 35px; }
     .mode-name { display: block; font-size: clamp(17px, 2.5vw, 22px); }
     .mode-desc { display: block; margin-top: 4px; font-size: 13px; opacity: .95; }
@@ -372,6 +374,75 @@
       text-indent: .12em;
       white-space: nowrap;
     }
+    /* 新增：多字語詞直式拼音遊戲 */
+    .spell-screen { height: 100%; min-height: 0; padding: clamp(6px, 1vh, 11px); display: flex; flex-direction: column; gap: 6px; }
+    .spell-status { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; font-size: clamp(13px, 1.8vw, 18px); font-weight: 950; }
+    .spell-status > :last-child { text-align: right; }
+    .spell-word { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 5px 12px; border-radius: 17px; background: #eef0ff; color: #392a88; }
+    .spell-icon { font-size: clamp(34px, 6vh, 58px); line-height: 1; }
+    .spell-name { font-size: clamp(25px, 4vh, 42px); font-weight: 1000; letter-spacing: .14em; }
+    .spell-audio { border: 0; border-radius: 13px; padding: 7px 12px; background: #6654d7; color: #fff; font-weight: 950; cursor: pointer; touch-action: manipulation; }
+    .spell-char-area { display: flex; justify-content: center; gap: clamp(7px, 1.5vw, 18px); min-height: 0; }
+    .spell-char { min-width: clamp(88px, 14vw, 132px); padding: 5px; border: 3px solid #f3cf68; border-radius: 15px; background: #fff9df; color: var(--ink); cursor: pointer; touch-action: manipulation; }
+    .spell-char.active { border: 5px solid #f0444f; padding: 3px; background: #fff; box-shadow: 0 0 0 3px rgba(240,68,79,.16); }
+    .spell-char-label { margin-bottom: 4px; color: #8d5413; font-size: clamp(15px, 2.2vw, 21px); font-weight: 1000; }
+    .spell-vertical { display: flex; justify-content: center; gap: 5px; }
+    .spell-stack { display: flex; flex-direction: column; gap: 3px; }
+    .spell-slot { width: clamp(31px, 4.5vh, 43px); height: clamp(31px, 4.5vh, 43px); display: grid; place-items: center; border: 2px solid #d5d8e5; border-radius: 8px; background: #fff; font-size: clamp(17px, 2.7vh, 25px); font-weight: 1000; }
+    .spell-tone { width: clamp(31px, 4.5vh, 43px); display: grid; place-items: center; border: 2px solid #f2b945; border-radius: 8px; background: #fff0b8; font-size: clamp(20px, 3vh, 28px); font-weight: 1000; }
+    .spell-keyboard { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: clamp(3px, .65vh, 7px); overflow: hidden; }
+    .spell-key-row { display: grid; grid-template-columns: 58px minmax(0, 1fr); align-items: center; gap: 7px; }
+    .spell-key-label { color: #706a83; font-size: clamp(12px, 1.8vh, 16px); font-weight: 950; text-align: right; white-space: nowrap; }
+    .spell-key-list { display: grid; justify-content: center; gap: clamp(3px, .55vw, 7px); }
+    .spell-key-row[data-key-group="sheng"] .spell-key-list { grid-template-columns: repeat(13, minmax(35px, 48px)); grid-template-rows: repeat(2, auto); }
+    .spell-key-row[data-key-group="jie"] .spell-key-list { grid-template-columns: repeat(3, minmax(54px, 76px)); }
+    .spell-key-row[data-key-group="yun"] .spell-key-list { grid-template-columns: repeat(13, minmax(35px, 48px)); }
+    .spell-key-row[data-key-group="tone"] .spell-key-list { grid-template-columns: repeat(5, minmax(78px, 112px)); }
+    .spell-key { width: 100%; height: clamp(34px, 4.8vh, 48px); padding: 0 6px; border: 2px solid currentColor; border-radius: 11px; font-size: clamp(17px, 2.7vh, 24px); font-weight: 1000; cursor: pointer; touch-action: none; }
+    .spell-key[data-spell-type="sheng"] { color: #c52c78; background: #ffe3f1; }
+    .spell-key[data-spell-type="jie"] { color: #1276ad; background: #def4ff; }
+    .spell-key[data-spell-type="yun"] { color: #13815e; background: #dcfaed; }
+    .spell-key[data-spell-type="tone"] { color: #9a5b0c; background: #fff2bd; font-size: clamp(12px, 2vh, 17px); }
+    .spell-actions { display: grid; grid-template-columns: auto minmax(130px, 260px); justify-content: center; gap: 8px; }
+    .spell-clear, .spell-submit { border: 0; border-radius: 12px; padding: 8px 15px; color: #fff; font-weight: 950; cursor: pointer; touch-action: manipulation; }
+    .spell-clear { background: #9198aa; }
+    .spell-submit { background: #25ad72; }
+    .spell-feedback { min-height: 24px; color: var(--purple-dark); text-align: center; font-size: clamp(13px, 2vw, 18px); font-weight: 950; }
+    .spell-pk { height: 100%; min-height: 0; position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr); gap: 5px; }
+    .spell-pk-side { min-width: 0; min-height: 0; padding: clamp(78px, 11vh, 102px) 7px 7px; display: flex; flex-direction: column; gap: 5px; overflow: hidden; transition: filter .4s, box-shadow .4s; }
+    #spellPKLeft { background: rgba(220,244,255,.52); }
+    #spellPKRight { background: rgba(255,227,230,.48); }
+    .spell-pk-shared { position: absolute; z-index: 4; top: 5px; left: 50%; transform: translateX(-50%); width: min(600px, 62%); padding: 5px 12px; border: 4px solid #fff; border-radius: 20px; background: linear-gradient(145deg, #fff7d7, #eee9ff); box-shadow: 0 7px 20px rgba(63,47,130,.2); text-align: center; }
+    .spell-pk-shared-status { color: #65558e; font-size: clamp(11px, 1.4vw, 15px); font-weight: 950; }
+    .spell-pk-shared .spell-word { padding: 2px 7px; background: transparent; }
+    .spell-pk-shared .spell-icon { font-size: clamp(30px, 5vh, 48px); }
+    .spell-pk-shared .spell-name { font-size: clamp(25px, 3.5vw, 40px); }
+    .spell-pk-shared .spell-audio { padding: 8px 14px; font-size: clamp(13px, 1.5vw, 17px); }
+    .spell-pk-side .pk-head { font-size: clamp(17px, 1.8vw, 25px); }
+    .spell-pk-side .pk-name { font-size: clamp(20px, 2vw, 29px); }
+    .spell-pk-side .spell-char-area { gap: clamp(7px, 1vw, 13px); }
+    .spell-pk-side .spell-char { min-width: clamp(100px, 10vw, 140px); padding: 7px; border-width: 4px; border-radius: 19px; }
+    .spell-pk-side .spell-char.active { border-width: 6px; padding: 5px; }
+    .spell-pk-side .spell-char-label { margin-bottom: 7px; font-size: clamp(21px, 2.2vw, 29px); }
+    .spell-pk-side .spell-vertical { gap: 8px; }
+    .spell-pk-side .spell-stack { gap: 5px; }
+    .spell-pk-side .spell-slot { width: clamp(42px, 5.6vh, 58px); height: clamp(42px, 5.6vh, 58px); border-width: 2px; border-radius: 10px; font-size: clamp(22px, 3.2vh, 31px); }
+    .spell-pk-side .spell-tone { width: clamp(42px, 5.6vh, 58px); border-width: 2px; border-radius: 10px; font-size: clamp(24px, 3.5vh, 34px); }
+    .spell-pk-side .spell-keyboard { gap: 3px; }
+    .spell-pk-side .spell-key-row { grid-template-columns: 45px minmax(0, 1fr); gap: 5px; }
+    .spell-pk-side .spell-key-label { font-size: clamp(12px, 1.35vw, 17px); }
+    .spell-pk-side .spell-key-list { gap: clamp(2px, .3vw, 5px); }
+    .spell-pk-side .spell-key-row[data-key-group="sheng"] .spell-key-list { grid-template-columns: repeat(13, minmax(27px, 45px)); }
+    .spell-pk-side .spell-key-row[data-key-group="jie"] .spell-key-list { grid-template-columns: repeat(3, minmax(58px, 94px)); }
+    .spell-pk-side .spell-key-row[data-key-group="yun"] .spell-key-list { grid-template-columns: repeat(13, minmax(27px, 45px)); }
+    .spell-pk-side .spell-key-row[data-key-group="tone"] .spell-key-list { grid-template-columns: repeat(5, minmax(66px, 105px)); }
+    .spell-pk-side .spell-key { height: clamp(35px, 4.6vh, 47px); padding: 0 3px; border-width: 3px; border-radius: 10px; font-size: clamp(17px, 2.45vh, 23px); }
+    .spell-pk-side .spell-key[data-spell-type="tone"] { font-size: clamp(11px, 1.65vh, 15px); }
+    .spell-pk-side .spell-actions { grid-template-columns: auto 1fr; }
+    .spell-pk-side .spell-feedback { min-height: 29px; font-size: clamp(16px, 1.7vw, 22px); }
+    .spell-pk-side .spell-clear, .spell-pk-side .spell-submit { padding: 9px 8px; border-radius: 14px; font-size: clamp(15px, 1.55vw, 20px); }
+    .spell-pk-side.loser { filter: brightness(.3) saturate(.25); pointer-events: none; }
+    .spell-pk-side.winner { box-shadow: inset 0 0 0 7px #ffd44f, inset 0 0 38px rgba(255,205,55,.55); }
     .celebrate { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; pointer-events: none; overflow: hidden; }
     .cheer { padding: 16px 28px; border: 5px solid #fff; border-radius: 27px; background: linear-gradient(135deg, #ffd759, #ff8b79); color: #633700; font-size: clamp(29px, 7vw, 57px); font-weight: 1000; box-shadow: 0 14px 45px rgba(90,52,0,.25); animation: cheerPop 1.1s ease forwards; }
     .confetti { position: absolute; top: -30px; left: var(--x); width: 12px; height: 23px; border-radius: 4px; background: var(--c); transform: rotate(var(--r)); animation: fall var(--d) ease-in forwards; }
@@ -407,6 +478,53 @@
       .mode-icon { display: inline-block; margin: 0 4px 0 0; font-size: 27px; vertical-align: middle; }
       .mode-name { display: inline-block; font-size: 16px; vertical-align: middle; }
       .mode-desc { font-size: 11px; }
+      .spell-pk { grid-template-columns: minmax(0, 1fr) 25px minmax(0, 1fr); gap: 2px; }
+      .spell-pk-side { padding: 72px 2px 3px; }
+      .spell-pk-shared { width: 70%; padding: 3px 5px; }
+      .spell-pk-shared .spell-icon { display: none; }
+      .spell-pk-shared .spell-name { font-size: 23px; }
+      .spell-key-row { grid-template-columns: 44px minmax(0, 1fr); gap: 3px; }
+      .spell-key-row[data-key-group="sheng"] .spell-key-list, .spell-key-row[data-key-group="yun"] .spell-key-list { grid-template-columns: repeat(13, minmax(25px, 1fr)); gap: 2px; }
+      .spell-key-row[data-key-group="tone"] .spell-key-list { grid-template-columns: repeat(5, minmax(52px, 1fr)); }
+      .spell-key { padding: 0 2px; }
+      .spell-pk-side .pk-head { font-size: 12px; }
+      .spell-pk-side .pk-name { font-size: 14px; }
+      .spell-pk-side .spell-char-area { gap: 3px; }
+      .spell-pk-side .spell-char { min-width: clamp(50px, 15vw, 72px); padding: 3px; border-width: 2px; border-radius: 11px; }
+      .spell-pk-side .spell-char.active { border-width: 4px; padding: 1px; }
+      .spell-pk-side .spell-char-label { margin-bottom: 3px; font-size: 16px; }
+      .spell-pk-side .spell-vertical { gap: 3px; }
+      .spell-pk-side .spell-stack { gap: 2px; }
+      .spell-pk-side .spell-slot { width: 25px; height: 25px; font-size: 14px; border-radius: 6px; }
+      .spell-pk-side .spell-tone { width: 25px; font-size: 17px; border-radius: 6px; }
+      .spell-pk-side .spell-key-row { grid-template-columns: 27px minmax(0, 1fr); gap: 2px; }
+      .spell-pk-side .spell-key-label { font-size: 9px; }
+      .spell-pk-side .spell-key-row[data-key-group="sheng"] .spell-key-list, .spell-pk-side .spell-key-row[data-key-group="yun"] .spell-key-list { grid-template-columns: repeat(13, minmax(18px, 1fr)); }
+      .spell-pk-side .spell-key-row[data-key-group="jie"] .spell-key-list { grid-template-columns: repeat(3, minmax(35px, 1fr)); }
+      .spell-pk-side .spell-key-row[data-key-group="tone"] .spell-key-list { grid-template-columns: repeat(5, minmax(31px, 1fr)); }
+      .spell-pk-side .spell-key { height: 27px; border-width: 2px; font-size: 12px; }
+      .spell-pk-side .spell-key[data-spell-type="tone"] { font-size: 8px; }
+      .spell-pk-side .spell-feedback { min-height: 18px; font-size: 10px; }
+      .spell-pk-side .spell-clear, .spell-pk-side .spell-submit { padding: 5px 3px; font-size: 10px; }
+    }
+    @media (min-width: 1360px) {
+      .spell-pk-side .spell-key-row[data-key-group="sheng"] .spell-key-list,
+      .spell-pk-side .spell-key-row[data-key-group="yun"] .spell-key-list { grid-template-columns: repeat(13, minmax(38px, 50px)); }
+      .spell-pk-side .spell-key-row[data-key-group="jie"] .spell-key-list { grid-template-columns: repeat(3, minmax(78px, 110px)); }
+      .spell-pk-side .spell-key-row[data-key-group="tone"] .spell-key-list { grid-template-columns: repeat(5, minmax(88px, 118px)); }
+      .spell-pk-side .spell-key { height: clamp(40px, 5vh, 50px); font-size: clamp(20px, 2.5vh, 25px); }
+      .spell-pk-side .spell-key[data-spell-type="tone"] { font-size: clamp(13px, 1.7vh, 17px); }
+    }
+    @media (min-width: 651px) and (max-width: 900px) {
+      .spell-pk-side .spell-key-row { grid-template-columns: 32px minmax(0, 1fr); gap: 2px; }
+      .spell-pk-side .spell-key-label { font-size: 10px; }
+      .spell-pk-side .spell-key-list { gap: 2px; }
+      .spell-pk-side .spell-key-row[data-key-group="sheng"] .spell-key-list,
+      .spell-pk-side .spell-key-row[data-key-group="yun"] .spell-key-list { grid-template-columns: repeat(13, minmax(20px, 1fr)); }
+      .spell-pk-side .spell-key-row[data-key-group="jie"] .spell-key-list { grid-template-columns: repeat(3, minmax(42px, 1fr)); }
+      .spell-pk-side .spell-key-row[data-key-group="tone"] .spell-key-list { grid-template-columns: repeat(5, minmax(40px, 1fr)); }
+      .spell-pk-side .spell-key { height: 32px; padding: 0 1px; font-size: 14px; }
+      .spell-pk-side .spell-key[data-spell-type="tone"] { font-size: 9px; }
     }
     @media (max-height: 700px) {
       .mascot { width: 42px; height: 42px; font-size: 25px; }
@@ -416,6 +534,9 @@
       .modal-icon { font-size: 42px; }
       .modal h2 { font-size: 28px; }
       .mode-btn { min-height: 86px; }
+      .spell-screen { gap: 3px; padding: 4px; }
+      .spell-word { padding: 2px 8px; }
+      .spell-feedback { min-height: 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -480,6 +601,16 @@
         </section>
         <div class="countdown hidden" id="countdown" aria-live="assertive"><div class="count-number">5</div></div>
       </div>
+
+      <div class="spell-screen hidden" id="spellSoloScreen" aria-label="拼音個人賽"></div>
+
+      <div class="spell-pk hidden" id="spellPKScreen" aria-label="拼音PK賽">
+        <section class="spell-pk-side" id="spellPKLeft" data-spell-side="left"></section>
+        <div class="pk-divider" aria-hidden="true"><span>PK</span></div>
+        <section class="spell-pk-side" id="spellPKRight" data-spell-side="right"></section>
+        <div class="spell-pk-shared" id="spellPKShared" aria-live="polite"></div>
+        <div class="countdown hidden" id="spellCountdown" aria-live="assertive"><div class="count-number">5</div></div>
+      </div>
     </section>
   </main>
 
@@ -492,6 +623,8 @@
         <button class="mode-btn" data-mode="match" type="button"><span class="mode-icon">🧩</span><span class="mode-name">注音對對碰</span><span class="mode-desc">8×8 紙牌，完成 32 組配對</span></button>
         <button class="mode-btn" data-mode="listen-pk" type="button"><span class="mode-icon">⚔️</span><span class="mode-name">聽注音點選 PK賽</span><span class="mode-desc">共同搶答 10 題，答對者得分</span></button>
         <button class="mode-btn" data-mode="match-pk" type="button"><span class="mode-icon">🏁</span><span class="mode-name">注音對對碰 PK賽</span><span class="mode-desc">左右各 8×8，先配對完成者獲勝</span></button>
+        <button class="mode-btn" data-mode="spell" type="button"><span class="mode-icon">✍️</span><span class="mode-name">拼音個人賽</span><span class="mode-desc">20 題多字語詞直式拼音</span></button>
+        <button class="mode-btn" data-mode="spell-pk" type="button"><span class="mode-icon">🎒</span><span class="mode-name">拼音 PK賽</span><span class="mode-desc">共同搶答 10 題，先答對者得分</span></button>
       </div>
     </section>
   </div>
@@ -552,6 +685,41 @@
       const celebrate = document.getElementById('celebrate');
       const countdown = document.getElementById('countdown');
       const sides = { left: document.getElementById('leftSide'), right: document.getElementById('rightSide') };
+      const spellSoloScreen = document.getElementById('spellSoloScreen');
+      const spellPKScreen = document.getElementById('spellPKScreen');
+      const spellPKShared = document.getElementById('spellPKShared');
+      const spellCountdown = document.getElementById('spellCountdown');
+      const spellPKSides = { left: document.getElementById('spellPKLeft'), right: document.getElementById('spellPKRight') };
+      const SPELL_SHENG = ['ㄅ','ㄆ','ㄇ','ㄈ','ㄉ','ㄊ','ㄋ','ㄌ','ㄍ','ㄎ','ㄏ','ㄐ','ㄑ','ㄒ','ㄓ','ㄔ','ㄕ','ㄖ','ㄗ','ㄘ','ㄙ'];
+      const SPELL_JIE = ['ㄧ','ㄨ','ㄩ'];
+      const SPELL_YUN = ['ㄚ','ㄛ','ㄜ','ㄝ','ㄞ','ㄟ','ㄠ','ㄡ','ㄢ','ㄣ','ㄤ','ㄥ','ㄦ'];
+      const SPELL_TONES = [
+        { value:'一聲', label:'一聲', symbol:'▔' }, { value:'二聲', label:'二聲 ˊ', symbol:'ˊ' },
+        { value:'三聲', label:'三聲 ˇ', symbol:'ˇ' }, { value:'四聲', label:'四聲 ˋ', symbol:'ˋ' },
+        { value:'輕聲', label:'輕聲 ˙', symbol:'˙' }
+      ];
+      const SPELL_BANK = [
+        {id:1,name:'蘋果',icon:'🍎',chars:[['蘋','ㄆ','ㄧ','ㄥ','二聲'],['果','ㄍ','ㄨ','ㄛ','三聲']]},
+        {id:2,name:'西瓜',icon:'🍉',chars:[['西','ㄒ','ㄧ','','一聲'],['瓜','ㄍ','ㄨ','ㄚ','一聲']]},
+        {id:3,name:'香蕉',icon:'🍌',chars:[['香','ㄒ','ㄧ','ㄤ','一聲'],['蕉','ㄐ','ㄧ','ㄠ','一聲']]},
+        {id:4,name:'冰淇淋',icon:'🍦',chars:[['冰','ㄅ','ㄧ','ㄥ','一聲'],['淇','ㄑ','ㄧ','','二聲'],['淋','ㄌ','ㄧ','ㄣ','二聲']]},
+        {id:5,name:'漢堡',icon:'🍔',chars:[['漢','ㄏ','','ㄢ','四聲'],['堡','ㄅ','','ㄠ','三聲']]},
+        {id:6,name:'牛奶',icon:'🥛',chars:[['牛','ㄋ','ㄧ','ㄡ','二聲'],['奶','ㄋ','','ㄞ','三聲']]},
+        {id:7,name:'蛋糕',icon:'🍰',chars:[['蛋','ㄉ','','ㄢ','四聲'],['糕','ㄍ','','ㄠ','一聲']]},
+        {id:8,name:'汽車',icon:'🚗',chars:[['汽','ㄑ','ㄧ','','四聲'],['車','ㄔ','','ㄜ','一聲']]},
+        {id:9,name:'飛機',icon:'✈️',chars:[['飛','ㄈ','','ㄟ','一聲'],['機','ㄐ','ㄧ','','一聲']]},
+        {id:10,name:'火車',icon:'🚂',chars:[['火','ㄏ','ㄨ','ㄛ','三聲'],['車','ㄔ','','ㄜ','一聲']]},
+        {id:11,name:'牙刷',icon:'🪥',chars:[['牙','','ㄧ','ㄚ','二聲'],['刷','ㄕ','ㄨ','ㄚ','一聲']]},
+        {id:12,name:'雨傘',icon:'☂️',chars:[['雨','','ㄩ','','三聲'],['傘','ㄙ','','ㄢ','三聲']]},
+        {id:13,name:'鉛筆',icon:'✏️',chars:[['鉛','ㄑ','ㄧ','ㄢ','一聲'],['筆','ㄅ','ㄧ','','三聲']]},
+        {id:14,name:'書包',icon:'🎒',chars:[['書','ㄕ','ㄨ','','一聲'],['包','ㄅ','','ㄠ','一聲']]},
+        {id:15,name:'剪刀',icon:'✂️',chars:[['剪','ㄐ','ㄧ','ㄢ','三聲'],['刀','ㄉ','','ㄠ','一聲']]},
+        {id:16,name:'手錶',icon:'⌚',chars:[['手','ㄕ','','ㄡ','三聲'],['錶','ㄅ','ㄧ','ㄠ','三聲']]},
+        {id:17,name:'氣球',icon:'🎈',chars:[['氣','ㄑ','ㄧ','','四聲'],['球','ㄑ','ㄧ','ㄡ','二聲']]},
+        {id:18,name:'電腦',icon:'💻',chars:[['電','ㄉ','ㄧ','ㄢ','四聲'],['腦','ㄋ','','ㄠ','三聲']]},
+        {id:19,name:'兔子',icon:'🐰',chars:[['兔','ㄊ','ㄨ','','四聲'],['子','ㄗ','','','輕聲']]},
+        {id:20,name:'太陽',icon:'☀️',chars:[['太','ㄊ','','ㄞ','四聲'],['陽','','ㄧ','ㄤ','二聲']]}
+      ];
 
       let mode = 'listen';
       let audioCtx = null;
@@ -561,6 +729,9 @@
       let listenState = null;
       let matchState = null;
       let pkState = null;
+      let spellState = null;
+      let spellPKState = null;
+      let spellVoiceRequest = 0;
 
       function shuffle(items) {
         const array = [...items];
@@ -724,6 +895,9 @@
         listenScreen.classList.add('hidden');
         matchScreen.classList.add('hidden');
         pkPanel.classList.add('hidden');
+        spellSoloScreen.classList.add('hidden');
+        spellPKScreen.classList.add('hidden');
+        spellCountdown.classList.add('hidden');
       }
 
       function startMode(selectedMode) {
@@ -740,6 +914,8 @@
         if (selectedMode === 'match') startMatch();
         if (selectedMode === 'listen-pk') startPK('listen');
         if (selectedMode === 'match-pk') startPK('match');
+        if (selectedMode === 'spell') startSpellSolo();
+        if (selectedMode === 'spell-pk') startSpellPK();
       }
 
       function startListen() {
@@ -1068,6 +1244,250 @@
         showCelebration(`${winnerSide === 'left' ? '左方' : '右方'}獲勝！好棒！`);
       }
 
+      function newSpellSelections(question) {
+        return question.chars.map(() => ({ sheng:'', jie:'', yun:'', tone:'' }));
+      }
+
+      function spellToneSymbol(value) {
+        return SPELL_TONES.find(toneItem => toneItem.value === value)?.symbol || '－';
+      }
+
+      function spellIsCorrect(question, selections) {
+        return question.chars.every((charData, index) => {
+          const selected = selections[index] || {};
+          return (selected.sheng || '') === charData[1] &&
+            (selected.jie || '') === charData[2] &&
+            (selected.yun || '') === charData[3] &&
+            (selected.tone || '一聲') === charData[4];
+        });
+      }
+
+      function spellKeyboardHTML() {
+        const row = (type, label, list) => `<div class="spell-key-row" data-key-group="${type}"><span class="spell-key-label">${label}</span><div class="spell-key-list">${list.map(item => {
+          const value = typeof item === 'string' ? item : item.value;
+          const text = typeof item === 'string' ? item : item.label;
+          return `<button class="spell-key" type="button" data-spell-type="${type}" data-spell-value="${value}">${text}</button>`;
+        }).join('')}</div></div>`;
+        return row('sheng','聲母',SPELL_SHENG) + row('jie','介母',SPELL_JIE) + row('yun','韻母',SPELL_YUN) + row('tone','聲調',SPELL_TONES);
+      }
+
+      function speakSpellText(text) {
+        if (!('speechSynthesis' in window)) return false;
+        const synth = window.speechSynthesis;
+        const request = ++spellVoiceRequest;
+        const play = () => {
+          if (request !== spellVoiceRequest) return;
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'zh-TW';
+          const voice = preferredZhVoice();
+          if (voice) utterance.voice = voice;
+          utterance.rate = .62;
+          utterance.pitch = 1.05;
+          utterance.volume = 1;
+          synth.resume();
+          synth.speak(utterance);
+        };
+        if (synth.speaking || synth.pending) {
+          synth.cancel();
+          addTimer(play, 90);
+        } else {
+          play();
+        }
+        return true;
+      }
+
+      function speakSpellQuestion(word) {
+        return speakSpellText(`請拼出，${word}`);
+      }
+
+      function spellCharsHTML(question, state) {
+        return question.chars.map((charData, index) => {
+          const selected = state.selections[index] || {};
+          return `<button class="spell-char ${state.active === index ? 'active' : ''}" type="button" data-spell-char="${index}">
+            <div class="spell-char-label">${charData[0]}${state.active === index ? ' ✍️' : ''}</div>
+            <div class="spell-vertical"><div class="spell-stack">
+              <span class="spell-slot">${selected.sheng || '－'}</span><span class="spell-slot">${selected.jie || '－'}</span><span class="spell-slot">${selected.yun || '－'}</span>
+            </div><span class="spell-tone">${spellToneSymbol(selected.tone)}</span></div>
+          </button>`;
+        }).join('');
+      }
+
+      function renderSpellSolo() {
+        if (!spellState) return;
+        const question = spellState.questions[spellState.index];
+        spellSoloScreen.innerHTML = `
+          <div class="spell-status"><span>第 <b>${spellState.index + 1}</b>／20 題</span><span>多字語詞直式拼音</span><span>得分 <b>${spellState.score}</b> 分</span></div>
+          <div class="progress-track"><div class="progress-bar" style="width:${(spellState.index + 1) * 5}%"></div></div>
+          <div class="spell-word"><span class="spell-icon">${question.icon}</span><span class="spell-name">${question.name}</span><button class="spell-audio" type="button" data-spell-action="audio">🔊 聽發音</button></div>
+          <div class="spell-char-area">${spellCharsHTML(question, spellState)}</div>
+          <div class="spell-keyboard">${spellKeyboardHTML()}</div>
+          <div class="spell-feedback" role="status">${spellState.message}</div>
+          <div class="spell-actions"><button class="spell-clear" type="button" data-spell-action="clear">🗑️ 清除此字</button><button class="spell-submit" type="button" data-spell-action="submit">${spellState.locked ? '➡️ 下一題' : '✨ 送出答案'}</button></div>`;
+      }
+
+      function startSpellSolo() {
+        subtitle.textContent = '看圖、聽發音，完成多字語詞的直式注音！';
+        spellSoloScreen.classList.remove('hidden');
+        const questions = shuffle(SPELL_BANK);
+        spellState = { questions, index:0, score:0, active:0, selections:newSpellSelections(questions[0]), locked:false, message:'請點選下方注音，完成每一個字！' };
+        renderSpellSolo();
+        speakSpellQuestion(questions[0].name);
+      }
+
+      function handleSpellSolo(control) {
+        if (!spellState) return;
+        const question = spellState.questions[spellState.index];
+        if (control.dataset.spellAction === 'audio') { speakSpellQuestion(question.name); return; }
+        if (control.dataset.spellChar !== undefined) { spellState.active = Number(control.dataset.spellChar); renderSpellSolo(); return; }
+        if (spellState.locked && control.dataset.spellAction !== 'submit') return;
+        if (control.dataset.spellType) {
+          const selected = spellState.selections[spellState.active];
+          const type = control.dataset.spellType;
+          const value = control.dataset.spellValue;
+          selected[type] = selected[type] === value ? '' : value;
+          if (type === 'tone' && value && spellState.active < spellState.selections.length - 1) spellState.active++;
+          renderSpellSolo();
+          return;
+        }
+        if (control.dataset.spellAction === 'clear') {
+          spellState.selections[spellState.active] = { sheng:'', jie:'', yun:'', tone:'' };
+          renderSpellSolo();
+          return;
+        }
+        if (control.dataset.spellAction === 'submit') {
+          if (spellState.locked) {
+            spellState.index++;
+            if (spellState.index >= spellState.questions.length) {
+              finishSingle(`你完成了 20 題拼音挑戰，得到 ${spellState.score} 分！`);
+              return;
+            }
+            const next = spellState.questions[spellState.index];
+            spellState.active = 0; spellState.selections = newSpellSelections(next); spellState.locked = false; spellState.message = '請完成每一個字的直式注音！';
+            renderSpellSolo(); addTimer(() => speakSpellQuestion(next.name), 250); return;
+          }
+          if (spellIsCorrect(question, spellState.selections)) {
+            spellState.score += 5; spellState.locked = true; spellState.message = '🎉 完全答對了！太棒了！';
+            playSuccess(); showCelebration('答對了！好棒！'); renderSpellSolo();
+          } else {
+            spellState.message = '💪 再試一次，仔細檢查每一個注音！'; playWrong(); renderSpellSolo();
+          }
+        }
+      }
+
+      function renderSpellPKShared() {
+        const question = spellPKState.questions[spellPKState.index];
+        spellPKShared.innerHTML = `<div class="spell-pk-shared-status">共同題目　第 ${spellPKState.index + 1}／10 題</div>
+          <div class="spell-word"><span class="spell-icon">${question.icon}</span><span class="spell-name">${question.name}</span><button class="spell-audio" type="button" data-spell-shared-audio>🔊 聽題目</button></div>`;
+      }
+
+      function renderSpellPKSide(side) {
+        const state = spellPKState[side];
+        const question = spellPKState.questions[spellPKState.index];
+        const panel = spellPKSides[side];
+        panel.innerHTML = `
+          <div class="pk-head"><span class="pk-name">${side === 'left' ? '🔵 左方玩家' : '🔴 右方玩家'}</span><span>得分 <b>${state.score}</b></span></div>
+          <div class="spell-char-area">${spellCharsHTML(question, state)}</div>
+          <div class="spell-keyboard">${spellKeyboardHTML()}</div>
+          <div class="spell-feedback" role="status">${state.message}</div>
+          <div class="spell-actions"><button class="spell-clear" type="button" data-spell-action="clear">🗑️ 清除</button><button class="spell-submit" type="button" data-spell-action="submit">✨ 送出答案</button></div>`;
+      }
+
+      function loadSpellPKQuestion(locked = false) {
+        const question = spellPKState.questions[spellPKState.index];
+        spellPKState.roundLocked = locked;
+        ['left','right'].forEach(side => {
+          const state = spellPKState[side];
+          state.active = 0; state.selections = newSpellSelections(question); state.locked = locked;
+          state.message = locked ? '準備開始！' : '請完成注音，搶先送出！';
+          renderSpellPKSide(side);
+        });
+        renderSpellPKShared();
+      }
+
+      function finishSpellPK() {
+        if (spellPKState.over) return;
+        spellPKState.over = true; spellPKState.roundLocked = true;
+        spellPKState.left.locked = true; spellPKState.right.locked = true;
+        const leftScore = spellPKState.left.score; const rightScore = spellPKState.right.score;
+        if (leftScore === rightScore) {
+          ['left','right'].forEach(side => {
+            spellPKSides[side].classList.add('winner');
+            const banner = document.createElement('div'); banner.className = 'winner-banner'; banner.textContent = '🤝 平手！'; spellPKSides[side].appendChild(banner);
+          });
+          playSuccess(); showCelebration('雙方平手！都好棒！');
+          return;
+        }
+        const winnerSide = leftScore > rightScore ? 'left' : 'right';
+        const loserSide = winnerSide === 'left' ? 'right' : 'left';
+        spellPKSides[winnerSide].classList.add('winner'); spellPKSides[loserSide].classList.add('loser');
+        const banner = document.createElement('div'); banner.className = 'winner-banner'; banner.textContent = '🏆 獲勝！'; spellPKSides[winnerSide].appendChild(banner);
+        playSuccess(); showCelebration(`${winnerSide === 'left' ? '左方' : '右方'}獲勝！好棒！`);
+      }
+
+      function handleSpellPK(side, control) {
+        const state = spellPKState?.[side];
+        if (!state || state.locked || spellPKState.roundLocked || spellPKState.over) return;
+        const question = spellPKState.questions[spellPKState.index];
+        if (control.dataset.spellChar !== undefined) { state.active = Number(control.dataset.spellChar); renderSpellPKSide(side); return; }
+        if (control.dataset.spellType) {
+          const selected = state.selections[state.active]; const type = control.dataset.spellType; const value = control.dataset.spellValue;
+          selected[type] = selected[type] === value ? '' : value;
+          if (type === 'tone' && value && state.active < state.selections.length - 1) state.active++;
+          renderSpellPKSide(side); return;
+        }
+        if (control.dataset.spellAction === 'clear') { state.selections[state.active] = { sheng:'', jie:'', yun:'', tone:'' }; renderSpellPKSide(side); return; }
+        if (control.dataset.spellAction === 'submit') {
+          if (!spellIsCorrect(question, state.selections)) { state.message = '答案不對，快再試一次！'; playWrong(); renderSpellPKSide(side); return; }
+          spellPKState.roundLocked = true; spellPKState.left.locked = true; spellPKState.right.locked = true; state.score++;
+          spellPKState[side].message = '🎉 你最先答對，得 1 分！';
+          spellPKState[side === 'left' ? 'right' : 'left'].message = '這題由對方先答對！';
+          renderSpellPKSide('left'); renderSpellPKSide('right'); playSuccess(); showCelebration(`${side === 'left' ? '左方' : '右方'}搶答成功！`);
+          addTimer(() => {
+            if (spellPKState.over) return;
+            if (spellPKState.index >= 9) finishSpellPK();
+            else { spellPKState.index++; loadSpellPKQuestion(false); addTimer(() => speakSpellQuestion(spellPKState.questions[spellPKState.index].name), 180); }
+          }, 850);
+        }
+      }
+
+      function runSpellCountdown() {
+        const number = spellCountdown.querySelector('.count-number');
+        let count = 5; number.classList.remove('start'); number.textContent = count; spellCountdown.classList.remove('hidden');
+        countdownTimer = setInterval(() => {
+          count--;
+          if (count > 0) number.textContent = count;
+          else {
+            clearInterval(countdownTimer); countdownTimer = null; number.textContent = '開始'; number.classList.add('start'); playSuccess();
+            addTimer(() => { spellCountdown.classList.add('hidden'); if (!spellPKState || spellPKState.over) return; spellPKState.roundLocked = false; ['left','right'].forEach(side => { spellPKState[side].locked = false; spellPKState[side].message = '請完成注音，搶先送出！'; renderSpellPKSide(side); }); speakSpellQuestion(spellPKState.questions[0].name); }, 650);
+          }
+        }, 1000);
+      }
+
+      function startSpellPK() {
+        subtitle.textContent = '拼音 PK賽｜共同搶答 10 題，每題先答對者得分！';
+        spellPKScreen.classList.remove('hidden');
+        Object.values(spellPKSides).forEach(panel => { panel.classList.remove('winner','loser'); panel.querySelectorAll('.winner-banner').forEach(item => item.remove()); });
+        const questions = shuffle(SPELL_BANK).slice(0, 10);
+        spellPKState = { questions, index:0, over:false, roundLocked:true, left:{ score:0, active:0, selections:[], locked:true, message:'準備開始！' }, right:{ score:0, active:0, selections:[], locked:true, message:'準備開始！' } };
+        loadSpellPKQuestion(true);
+        speakSpellText('準備開始，倒數五秒');
+        runSpellCountdown();
+      }
+
+      function bindSpellControls(panel, side = null) {
+        const findControl = target => target.closest('[data-spell-char], [data-spell-type], [data-spell-action]');
+        panel.addEventListener('pointerdown', event => {
+          if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+          const control = findControl(event.target); if (!control) return; event.preventDefault(); control.dataset.spellTouch = String(Date.now());
+          side ? handleSpellPK(side, control) : handleSpellSolo(control);
+        });
+        panel.addEventListener('click', event => {
+          const control = findControl(event.target); if (!control) return;
+          if (event.detail !== 0 && Date.now() - Number(control.dataset.spellTouch || 0) < 700) return;
+          side ? handleSpellPK(side, control) : handleSpellSolo(control);
+        });
+      }
+
       function finishSingle(text) {
         finishText.textContent = text;
         finishOverlay.classList.remove('hidden');
@@ -1088,9 +1508,27 @@
           panel.classList.remove('winner', 'loser');
           panel.querySelectorAll('.winner-banner').forEach(item => item.remove());
         });
+        Object.values(spellPKSides).forEach(panel => {
+          panel.classList.remove('winner', 'loser');
+          panel.querySelectorAll('.winner-banner').forEach(item => item.remove());
+        });
         startOverlay.classList.remove('hidden');
       }
 
+      bindSpellControls(spellSoloScreen);
+      bindSpellControls(spellPKSides.left, 'left');
+      bindSpellControls(spellPKSides.right, 'right');
+      let spellSharedTouchedAt = 0;
+      spellPKShared.addEventListener('pointerdown', event => {
+        if ((event.pointerType !== 'touch' && event.pointerType !== 'pen') || !event.target.closest('[data-spell-shared-audio]')) return;
+        event.preventDefault(); spellSharedTouchedAt = Date.now();
+        if (spellPKState && !spellPKState.over) speakSpellQuestion(spellPKState.questions[spellPKState.index].name);
+      });
+      spellPKShared.addEventListener('click', event => {
+        if (!event.target.closest('[data-spell-shared-audio]')) return;
+        if (event.detail !== 0 && Date.now() - spellSharedTouchedAt < 700) return;
+        if (spellPKState && !spellPKState.over) speakSpellQuestion(spellPKState.questions[spellPKState.index].name);
+      });
       document.querySelectorAll('.mode-btn').forEach(button => button.addEventListener('click', () => startMode(button.dataset.mode)));
       document.getElementById('homeTop').addEventListener('click', showHome);
       document.getElementById('finishHome').addEventListener('click', showHome);
