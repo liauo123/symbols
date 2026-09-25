@@ -1249,7 +1249,7 @@
       }
 
       function spellToneSymbol(value) {
-        return SPELL_TONES.find(toneItem => toneItem.value === value)?.symbol || '－';
+        return SPELL_TONES.find(toneItem => toneItem.value === value)?.symbol || '';
       }
 
       function spellIsCorrect(question, selections) {
@@ -1306,7 +1306,7 @@
           return `<button class="spell-char ${state.active === index ? 'active' : ''}" type="button" data-spell-char="${index}">
             <div class="spell-char-label">${charData[0]}${state.active === index ? ' ✍️' : ''}</div>
             <div class="spell-vertical"><div class="spell-stack">
-              <span class="spell-slot">${selected.sheng || '－'}</span><span class="spell-slot">${selected.jie || '－'}</span><span class="spell-slot">${selected.yun || '－'}</span>
+              <span class="spell-slot">${selected.sheng || ''}</span><span class="spell-slot">${selected.jie || ''}</span><span class="spell-slot">${selected.yun || ''}</span>
             </div><span class="spell-tone">${spellToneSymbol(selected.tone)}</span></div>
           </button>`;
         }).join('');
